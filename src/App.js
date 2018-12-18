@@ -1,26 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Todos from './Todos';
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      todos: ["A", "B", "C"],
+      currentText: ''
+    }
+  }
+
+  //Allows typing in text box and keeps state in sync
+  setText = (e) => {
+    const newValue = e.target.value;
+    this.setState({currentText : newValue})
+  }
+
+  addToDo = () => {
+    const newTodo = this.state.currentText;
+    const newTodos = [...this.state.todos, newTodo]
+    this.setState({ todos: newTodos, currentText : '' })
+  }
+
   render() {
+    //const todos = ["Do Stuff", "Do more stuff", "You forgot to do this"];
+    // const todoList = todos.map(t => <li key={t}>{t}</li>);
+    const {currentText, todos} = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Todos
+        currentText = {currentText}
+        setText = {this.setText}
+        addToDo = {this.addToDo}
+        todos = {todos}
+      />
     );
   }
 }
